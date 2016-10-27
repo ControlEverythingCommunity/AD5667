@@ -10,7 +10,7 @@
 // AD5667 I2C address is 0x0E(14)
 #define Addr 0x0E
 
-float voltage = 0.0;
+double voltage = 0.0;
 void setup()
 {
   // Set variable
