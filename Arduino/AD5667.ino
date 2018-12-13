@@ -20,7 +20,7 @@ void setup()
 
 void loop()
 {
-  unsigned int data[2] = {0x80, 0x00};
+  word data = 0x8000;
   
   // Start I2C transmission
   Wire.beginTransmission(Addr);
@@ -28,14 +28,14 @@ void loop()
   Wire.write(0x1F);
   // Write data = 0x8000(32768)
   // data msb = 0x80
-  Wire.write(data[0]);
+  Wire.write(highByte(data));
   // data lsb = 0x00
-  Wire.write(data[1]);
+  Wire.write(lowByte(data));
   // Stop I2C transmission
   Wire.endTransmission();
 
   // Convert the data, Vref = 5 V
-  float voltage = (((data[0] * 256) + (data[1])) / 65536.0) * 5.0;
+  float voltage = (( highByte(data) * 256 + lowByte(data)) / 65535.0) * 5.0;
 
   // Output data to serial monitor
   Serial.print("Voltage : ");
